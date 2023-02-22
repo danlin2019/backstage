@@ -4,19 +4,22 @@ import Login from './pages/Login';
 import Modals from './pages/Modals';
 import ProductModal from './pages/ProductModal';
 import DeleteModal from './pages/DeleteModal';
+import CouponModal from './pages/CouponModal';
 
 function App() {
   return (
     <div className='App'>
       <Link to='/login'>登入</Link> |<Link to='/dashboard'>Dashboard</Link> |
-      <Link to='/modal/product'>Product Modal</Link> | 
-      <Link to='/modal/delete'>Delete Modal</Link>
+      <Link to='/modal/product'>Product Modal</Link> |
+      <Link to='/modal/delete'>Delete Modal</Link> |
+      <Link to='/modal/coupon'>Coupon Modal</Link> |
       <Routes>
         <Route path='/login' element={<Login />}></Route>
         <Route path='/dashboard' element={<Dashboard />}></Route>
         <Route path='/modal' element={<Modals />}>
           <Route path='product' element={<ProductModal />}></Route>
           <Route path='delete' element={<DeleteModal />}></Route>
+          <Route path='coupon' element={<CouponModal />}></Route>
         </Route>
       </Routes>
     </div>
