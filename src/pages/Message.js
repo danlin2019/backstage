@@ -9,6 +9,7 @@ function Message() {
         role='alert'
         aria-live='assertive'
         aria-atomic='true'
+        data-delay='3000'
       >
         <div className={`toast-header text-white bg-success`}>
           <strong className='me-auto'>Message</strong>
