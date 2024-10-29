@@ -4,18 +4,20 @@ import './stylesheets/all.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import axios from 'axios';
+
 import {
   HashRouter,
 } from 'react-router-dom';
-axios.defaults.baseURL = process.env.REACT_APP_API_URL;
-
+// axios 預設會加入這串網址 process.env.REACT_APP_API_UR
+axios.defaults.baseURL = process.env.REACT_APP_API_URL
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <HashRouter>
-      <App />
-    </HashRouter>
-  </React.StrictMode>
+  <HashRouter>
+  <App />
+</HashRouter>
+  // <React.StrictMode>
+  
+  // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
