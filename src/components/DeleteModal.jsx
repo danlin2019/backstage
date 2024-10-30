@@ -1,8 +1,9 @@
-function DeleteModal() {
+function DeleteModal({close,text,deleteClick,id}) {
   return (
     <div
       className='modal fade'
       tabIndex='-1'
+      id="deleteModal"
       aria-labelledby='exampleModalLabel'
       aria-hidden='true'
     >
@@ -16,14 +17,18 @@ function DeleteModal() {
               type='button'
               className='btn-close'
               aria-label='Close'
+              onClick={close}
             />
           </div>
-          <div className='modal-body'>刪除品項</div>
+          <div className='modal-body'>刪除 {text}</div>
           <div className='modal-footer'>
-            <button type='button' className='btn btn-secondary'>
+            <button type='button' className='btn btn-secondary'
+              onClick={close}
+            >
               取消
             </button>
-            <button type='button' className='btn btn-danger'>
+            <button type='button' className='btn btn-danger'
+            onClick={()=>deleteClick(id)}>
               確認刪除
             </button>
           </div>

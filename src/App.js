@@ -3,8 +3,8 @@ import Dashboard from './pages/admin/Dashboard';
 import AdminProducts from './pages/admin/AdminProducts';
 import Login from './pages/Login';
 import Modals from './pages/Modals';
-import ProductModal from './components/ProductModal';
-import DeleteModal from './pages/DeleteModal';
+// import ProductModal from './components/ProductModal';
+// import DeleteModal from './components/DeleteModal';
 import CouponModal from './pages/CouponModal';
 import Message from './pages/Message';
 import { useEffect } from 'react';
@@ -35,7 +35,7 @@ function App() {
         </Route>
         <Route path='/modal' element={<Modals />}>
           {/* <Route path='/components/product' element={<ProductModal />}></Route> */}
-          <Route path='delete' element={<DeleteModal />}></Route>
+          {/* <Route path='delete' element={<DeleteModal />}></Route> */}
           <Route path='coupon' element={<CouponModal />}></Route>
         </Route>
         <Route path='/message' element={<Message />} />

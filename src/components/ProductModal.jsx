@@ -59,7 +59,27 @@ function ProductModal({closeProductModal,getProducts,type,productList}) {
     }
   }
 
+  const updateFile = async (file) =>{
+    console.log(file)
+    if(!file) return
+    const formData = new FormData()
+    formData.append('file-to-upload',file)
+    try {
+      const res = await axios.post(`/v2/api/${process.env.REACT_APP_API_PATH}/admin/upload`,formData)
+      console.log(res)
+      const {imageUrl,success} = res.data
+      if(success){
+        alert('上傳成功')
+        productData.imageUrl = imageUrl
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   //送資料
+  //關閉 Modal
+  //重新撈取列表 api
   const dataSumit = async () =>{
     let api = `/v2/api/${process.env.REACT_APP_API_PATH}/admin/product`,
         method = 'post'
@@ -99,7 +119,8 @@ function ProductModal({closeProductModal,getProducts,type,productList}) {
         <div className='modal-content'>
           <div className='modal-header'>
             <h1 className='modal-title fs-5' id='exampleModalLabel'>
-              建立新商品
+            {type=== 'create' ? '建立新商品' : `編輯 ${productList.title}`}
+              
             </h1>
             <button
               type='button'
@@ -120,6 +141,8 @@ function ProductModal({closeProductModal,getProducts,type,productList}) {
                       id='image'
                       placeholder='請輸入圖片連結'
                       className='form-control'
+                      onChange={handleChange}
+                      value={productData.imageUrl}
                     />
                   </label>
                 </div>
@@ -128,8 +151,10 @@ function ProductModal({closeProductModal,getProducts,type,productList}) {
                     或 上傳圖片
                     <input
                       type='file'
+                      name="file-to-upload"
                       id='customFile'
                       className='form-control'
+                      onChange={(e)=> {updateFile(e.target.files[0])}}
                     />
                   </label>
                 </div>
@@ -256,7 +281,8 @@ function ProductModal({closeProductModal,getProducts,type,productList}) {
                         placeholder='請輸入產品說明內容'
                         className='form-check-input'
                         onChange={handleChange}
-                        value={productData.is_enabled}
+                        // Boolean(productData.is_enabled) 布林值轉換 或是 可以用 ！ 他會從真值變成假值，如果是兩個!! 他的概念跟布林值轉換是一樣的
+                        checked={!!productData.is_enabled}
                       />
                     </label>
                   </div>

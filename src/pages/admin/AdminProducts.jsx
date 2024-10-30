@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import ProductModal from "../../components/ProductModal";
+import DeleteModal from "../../components/DeleteModal";
 import { Modal } from "bootstrap";
 
 function AdminProducts(){
@@ -15,11 +16,17 @@ function AdminProducts(){
 
 
   const productmodal = useRef(null)
+  const deletemodal = useRef(null)
   useEffect(()=>{
     // static 點擊外面無法關閉
     productmodal.current = new Modal(document.getElementById('isproductModal'),{
       backdrop: 'static', // 設定靜態 backdrop
     });
+
+    deletemodal.current = new Modal(document.getElementById('deleteModal'),{
+      backdrop: 'static', // 設定靜態 backdrop
+    });
+
     getProducts()
   },[])
 
@@ -29,7 +36,7 @@ function AdminProducts(){
     const {products,pagination} = productRes.data
     setProducts(products)
     setPagination(pagination)
-    // console.log('產品',productRes)
+    console.log('產品',productRes)
   }  
 
   // 打開 Modal
@@ -42,9 +49,40 @@ function AdminProducts(){
   const closeProductModal = () =>{
     productmodal.current.hide()
   }
+  // 開啟 Detele Modal
+  const openDeteleProductModal = (product) =>{
+    deletemodal.current.show()
+    setProductList(product)
+  }
+  // 關閉 Detele Modal
+  const closeDeteleProductModal = () =>{
+    deletemodal.current.hide()
+  }
+
+  //刪除資料
+  const deleteProduct = async (id) =>{
+    try {
+      console.log(id)
+      const res = await axios.delete(`/v2/api/${process.env.REACT_APP_API_PATH}/admin/product/${id}`)
+      console.log(res)
+      const {success,message} = res.data
+      if(success){
+        alert(message)
+        getProducts()
+        deletemodal.current.hide()
+      }
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  
+
   return(
   <div className="p-3">
     <ProductModal closeProductModal={closeProductModal} getProducts={getProducts} type={type} productList={productList}/>
+    <DeleteModal close={closeDeteleProductModal} text={productList.title} deleteClick={deleteProduct} id={productList.id}/>
     <h3>產品列表</h3>
     <hr />
     <div className="text-end">
@@ -85,7 +123,7 @@ function AdminProducts(){
             <button
               type="button"
               className="btn btn-outline-danger btn-sm ms-2"
-             
+              onClick={()=>{openDeteleProductModal(product)}}
             >
               刪除
             </button>
