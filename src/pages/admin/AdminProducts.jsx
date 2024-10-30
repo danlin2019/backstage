@@ -29,7 +29,7 @@ function AdminProducts(){
     const {products,pagination} = productRes.data
     setProducts(products)
     setPagination(pagination)
-    console.log('產品',productRes)
+    // console.log('產品',productRes)
   }  
 
   // 打開 Modal

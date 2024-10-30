@@ -19,7 +19,6 @@ function ProductModal({closeProductModal,getProducts,type,productList}) {
 
   // 判斷目前 type 如果 create 給予預設值 如果是 edit 將取得的值帶入 setProductData
   useEffect(()=>{
-    console.log('props type' , type)
     if(type === 'create'){
       setProductData({
         "title": "",
@@ -72,7 +71,6 @@ function ProductModal({closeProductModal,getProducts,type,productList}) {
 
     try {
       const res = await axios[method](api,{'data':productData})
-      console.log(res)
       const {message,success} = res.data
       if(success){
         alert(message)
