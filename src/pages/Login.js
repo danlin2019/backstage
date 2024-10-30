@@ -18,10 +18,8 @@ function Login() {
   const loginSumit = async () =>{
     try {
       const res = await axios.post('/v2/admin/signin',data)
-      console.log(res)
       const {token,expired,message,success} = res.data
       if(success){
-       
         alert(message)
         navigate('/admin/products')
         // 
@@ -29,20 +27,15 @@ function Login() {
       // 將 token 帶入 cookie 裡 參考文章 https://developer.mozilla.org/zh-CN/docs/Web/API/Document/cookie
       document.cookie = `hexToken = ${token}; expires=${new Date(expired)}`
     } catch (error) {
-        console.log(error.response.data.message)
         setLoginStage(error.response.data)
     }
-
-
   }
-
 
 
   return (<div className="container py-5">
     <div className="row justify-content-center">
       <div className="col-md-6">
         <h2>登入帳號</h2>
-
         <div className={`alert alert-danger ${loginStage.message ? 'd-block' : 'd-none'}`} role="alert">
           {loginStage.message}
         </div>

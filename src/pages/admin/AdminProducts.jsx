@@ -4,20 +4,8 @@ import axios from "axios";
 function AdminProducts(){
   useEffect(()=>{
     (async ()=>{
-      // 取出 cookie 
-      const token = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("hexToken="))
-        ?.split("=")[1];
-      console.log(token)
-      // 
-      if(token !== undefined) {
-      // axios 預設值的headers 必須夾帶驗證的資訊 參考文章 https://github.com/axios/axios#global-axios-defaults
-      axios.defaults.headers.common['Authorization'] = token
       const productRes = await axios.get(`/v2/api/${process.env.REACT_APP_API_PATH}/admin/products/all`)
       console.log('產品',productRes)
-      }
-
     })()
   },[])
   return(
