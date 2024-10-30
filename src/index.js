@@ -8,7 +8,7 @@ import axios from 'axios';
 import {
   HashRouter,
 } from 'react-router-dom';
-// axios 預設會加入這串網址 process.env.REACT_APP_API_UR
+// axios 預設會加入這串網址 process.env.REACT_APP_API_URL
 axios.defaults.baseURL = process.env.REACT_APP_API_URL
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

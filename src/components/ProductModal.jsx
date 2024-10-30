@@ -1,11 +1,102 @@
-function ProductModal() {
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+// 1.取得欄位資料
+// 2.將資料組合成data 
+// 3.送api
+function ProductModal({closeProductModal,getProducts,type,productList}) {
+  const [productData,setProductData] = useState({
+    "title": "",
+    "category": "",
+    "origin_price": 100,
+    "price": 100,
+    "unit": "個",
+    "description": "",
+    "content": "",
+    "is_enabled": 0,
+    "imageUrl": "",
+  })
+
+  // 判斷目前 type 如果 create 給予預設值 如果是 edit 將取得的值帶入 setProductData
+  useEffect(()=>{
+    console.log('props type' , type)
+    if(type === 'create'){
+      setProductData({
+        "title": "",
+        "category": "",
+        "origin_price": 100,
+        "price": 100,
+        "unit": "個",
+        "description": "",
+        "content": "",
+        "is_enabled": 0,
+        "imageUrl": "",
+      })
+    }else if(type === 'edit'){
+      setProductData(productList);
+    }
+  },[type,productList])
+
+  // 取欄位值
+  const handleChange = (e) =>{
+    const {name,value} = e.target
+    // includes方法 來查詢的值有沒有包含在陣列裡面
+    if(['price','origin_price'].includes(name)){
+      setProductData({
+        ...productData,
+        [name]:Number(value)
+      })
+    }else if(name === 'is_enabled'){
+      setProductData({
+        ...productData,
+        // 加上一個 + 號來做轉型
+        [name]:+e.target.checked, 
+      })
+    }else{
+      setProductData({
+        ...productData,
+        [name]:value
+      })
+    }
+  }
+
+  //送資料
+  const dataSumit = async () =>{
+    let api = `/v2/api/${process.env.REACT_APP_API_PATH}/admin/product`,
+        method = 'post'
+
+    if(type === 'edit'){
+      api =`/v2/api/${process.env.REACT_APP_API_PATH}/admin/product/${productList.id}`
+      method = 'put'
+    }
+
+    try {
+      const res = await axios[method](api,{'data':productData})
+      console.log(res)
+      const {message,success} = res.data
+      if(success){
+        alert(message)
+        closeProductModal()
+        getProducts()
+      }
+      
+    } catch (error) {
+      console.log('error',error)
+    }
+  }
+
+
+
   return (
+  
     <div
       className='modal fade'
+      id='isproductModal'
       tabIndex='-1'
       aria-labelledby='exampleModalLabel'
       aria-hidden='true'
     >
+     
       <div className='modal-dialog modal-lg'>
         <div className='modal-content'>
           <div className='modal-header'>
@@ -16,6 +107,7 @@ function ProductModal() {
               type='button'
               className='btn-close'
               aria-label='Close'
+              onClick={closeProductModal}
             />
           </div>
           <div className='modal-body'>
@@ -46,7 +138,10 @@ function ProductModal() {
                 <img src="" alt='' className='img-fluid' />
               </div>
               <div className='col-sm-8'>
+             
                 <div className='form-group mb-2'>
+                {/* 可用 pre 標籤 測試值是否有正確取得 */}
+                {/* <pre>{JSON.stringify(productData)}</pre> */}
                   <label className='w-100' htmlFor='title'>
                     標題
                     <input
@@ -55,6 +150,8 @@ function ProductModal() {
                       name='title'
                       placeholder='請輸入標題'
                       className='form-control'
+                      onChange={handleChange}
+                      value={productData.title}
                     />
                   </label>
                 </div>
@@ -68,6 +165,8 @@ function ProductModal() {
                         name='category'
                         placeholder='請輸入分類'
                         className='form-control'
+                        onChange={handleChange}
+                        value={productData.category}
                       />
                     </label>
                   </div>
@@ -80,6 +179,8 @@ function ProductModal() {
                         name='unit'
                         placeholder='請輸入單位'
                         className='form-control'
+                        onChange={handleChange}
+                        value={productData.unit}
                       />
                     </label>
                   </div>
@@ -94,6 +195,8 @@ function ProductModal() {
                         name='origin_price'
                         placeholder='請輸入原價'
                         className='form-control'
+                        onChange={handleChange}
+                        value={productData.origin_price}
                       />
                     </label>
                   </div>
@@ -106,6 +209,8 @@ function ProductModal() {
                         name='price'
                         placeholder='請輸入售價'
                         className='form-control'
+                        onChange={handleChange}
+                        value={productData.price}
                       />
                     </label>
                   </div>
@@ -120,6 +225,8 @@ function ProductModal() {
                       name='description'
                       placeholder='請輸入產品描述'
                       className='form-control'
+                      onChange={handleChange}
+                      value={productData.description}
                     />
                   </label>
                 </div>
@@ -132,6 +239,8 @@ function ProductModal() {
                       name='content'
                       placeholder='請輸入產品說明內容'
                       className='form-control'
+                      onChange={handleChange}
+                      value={productData.content}
                     />
                   </label>
                 </div>
@@ -148,6 +257,8 @@ function ProductModal() {
                         name='is_enabled'
                         placeholder='請輸入產品說明內容'
                         className='form-check-input'
+                        onChange={handleChange}
+                        value={productData.is_enabled}
                       />
                     </label>
                   </div>
@@ -156,10 +267,10 @@ function ProductModal() {
             </div>
           </div>
           <div className='modal-footer'>
-            <button type='button' className='btn btn-secondary'>
+            <button type='button' className='btn btn-secondary' onClick={closeProductModal}>
               關閉
             </button>
-            <button type='button' className='btn btn-primary'>
+            <button type='button' className='btn btn-primary' onClick={dataSumit}>
               儲存
             </button>
           </div>

@@ -25,7 +25,6 @@ function Dashboard() {
       (async ()=>{
         try {
           const res = await axios.post('/v2/api/user/check')
-          console.log('防呆 若token錯誤',res)
         } catch (error) {
           if(!error.response.data.success){
             navigate('/login')
@@ -39,7 +38,7 @@ function Dashboard() {
       <nav className="navbar navbar-expand-lg bg-dark">
         <div className="container-fluid">
           <p className="text-white mb-0">
-            HEX EATS 後台管理系統
+            後台管理系統
           </p>
           <button
             className="navbar-toggler"
