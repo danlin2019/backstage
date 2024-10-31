@@ -1,10 +1,16 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { MessageContext , handleSuccessMessage,handleErrorMessage} from "../store/messageStore";
 
 // 1.取得欄位資料
 // 2.將資料組合成data 
 // 3.送api
 function ProductModal({closeProductModal,getProducts,type,productList}) {
+  //在此用不到 message 將它移除， 但 ',' 必須留下
+  const [,dispatch] = useContext(MessageContext)
+
+
+
   const [productData,setProductData] = useState({
     "title": "",
     "category": "",
@@ -93,13 +99,15 @@ function ProductModal({closeProductModal,getProducts,type,productList}) {
       const res = await axios[method](api,{'data':productData})
       const {message,success} = res.data
       if(success){
-        alert(message)
+        console.log(res)
+        handleSuccessMessage(dispatch, message);
         closeProductModal()
         getProducts()
       }
       
     } catch (error) {
       console.log('error',error)
+      handleErrorMessage(dispatch, error);
     }
   }
 
@@ -305,3 +313,5 @@ function ProductModal({closeProductModal,getProducts,type,productList}) {
 }
 
 export default ProductModal;
+
+

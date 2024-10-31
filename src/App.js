@@ -7,7 +7,7 @@ import Modals from './pages/Modals';
 // import ProductModal from './components/ProductModal';
 // import DeleteModal from './components/DeleteModal';
 // import CouponModal from './pages/CouponModal';
-import Message from './pages/Message';
+// import Message from './components/Message';
 import { useEffect } from 'react';
 import axios from 'axios';
 
@@ -35,7 +35,7 @@ function App() {
           {/* <Route path='delete' element={<DeleteModal />}></Route> */}
           {/* <Route path='coupon' element={<CouponModal />}></Route> */}
         </Route>
-        <Route path='/message' element={<Message />} />
+        {/* <Route path='/message' element={<Message />} /> */}
       </Routes>
     </div>
   );

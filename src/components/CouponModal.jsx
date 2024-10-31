@@ -18,7 +18,7 @@ function CouponModal({closeCouponModal,getProducts,type,productList}) {
   const [date,setDate] = useState(new Date())
   
   // 判斷目前 type 如果 create 給予預設值 如果是 edit 將取得的值帶入 setCouponData
-  // 新增優惠卷的時間是今天 編輯是傳進來的時間
+  // 新增優惠卷的時間是今天 編輯是資料傳進來的時間
   useEffect(()=>{
     if(type === 'create'){
       setCouponData({

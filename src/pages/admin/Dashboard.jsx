@@ -1,8 +1,15 @@
 import { Outlet , useNavigate , Link} from "react-router-dom";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useReducer } from "react";
+import Message from "../../components/Message";
+import {MessageContext,messageReducer,initState} from '../../store/messageStore'
 function Dashboard() {
   const navigate = useNavigate()
+
+  // 第一個是 reducer的狀態管理，第二是你的預設狀態
+  const reducer = useReducer(messageReducer,initState)
+  // console.log(reducer)
+
   // 登出 清除 token
   const logOut = () =>{
     console.log('登出')
@@ -34,7 +41,8 @@ function Dashboard() {
   },[token,navigate])
 
   return (
-    <>
+    <MessageContext.Provider value={reducer}>
+      <Message/>
       <nav className="navbar navbar-expand-lg bg-dark">
         <div className="container-fluid">
           <p className="text-white mb-0">
@@ -85,7 +93,7 @@ function Dashboard() {
           {/* Products end */}
         </div>
       </div>
-    </>
+    </MessageContext.Provider>
   )
 }
 
