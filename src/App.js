@@ -1,15 +1,18 @@
+import { useEffect } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
+// 後台頁面
 import Dashboard from './pages/admin/Dashboard';
 import AdminProducts from './pages/admin/AdminProducts';
 import AdminCoupons from './pages/admin/AdminCoupons'
+import AdminOrders from './pages/admin/AdminOrders';
 import Login from './pages/Login';
-import Modals from './pages/Modals';
-// import ProductModal from './components/ProductModal';
-// import DeleteModal from './components/DeleteModal';
-// import CouponModal from './pages/CouponModal';
-// import Message from './components/Message';
-import { useEffect } from 'react';
-import axios from 'axios';
+// 前台頁面
+import FrontLayout from './pages/front/FrontLayout';
+import Home from './pages/front/Home';
+import Products from './pages/front/Products';
+import ProductDeatil from './pages/front/ProductDeatil';
+
+// import axios from 'axios';
 
 function App() {
   useEffect(()=>{
@@ -25,17 +28,19 @@ function App() {
   return (
     <div className='App'>
       <Routes>
+        <Route path='/' element={<FrontLayout />}>
+          <Route path="" element={<Home/>}></Route>
+          <Route path='products' element={<Products/>}></Route>
+          <Route path='product/:id' element={<ProductDeatil/>}></Route>
+        </Route>
+
         <Route path='/login' element={<Login />}></Route>
         <Route path='/admin' element={<Dashboard />}>
           <Route path='products' element={<AdminProducts/>}></Route>
           <Route path='coupons' element={<AdminCoupons/>}></Route>
+          <Route path='orders' element={<AdminOrders/>}></Route>
+          
         </Route>
-        <Route path='/modal' element={<Modals />}>
-          {/* <Route path='/components/product' element={<ProductModal />}></Route> */}
-          {/* <Route path='delete' element={<DeleteModal />}></Route> */}
-          {/* <Route path='coupon' element={<CouponModal />}></Route> */}
-        </Route>
-        {/* <Route path='/message' element={<Message />} /> */}
       </Routes>
     </div>
   );

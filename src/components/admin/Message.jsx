@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { MessageContext } from "../store/messageStore";
+import { MessageContext } from "../../store/messageStore";
 
 function Message() {
     // message 對照的是 initState dispatch是他的方法

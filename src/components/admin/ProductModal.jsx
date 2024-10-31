@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { MessageContext , handleSuccessMessage,handleErrorMessage} from "../store/messageStore";
+import { MessageContext , handleSuccessMessage,handleErrorMessage} from "../../store/messageStore";
 
 // 1.取得欄位資料
 // 2.將資料組合成data 

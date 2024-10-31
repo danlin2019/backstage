@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import ProductModal from "../../components/ProductModal";
-import DeleteModal from "../../components/DeleteModal";
-import Pagination from "../../components/Pagination";
+import ProductModal from "../../components/admin/ProductModal";
+import DeleteModal from "../../components/admin/DeleteModal";
+import Pagination from "../../components/admin/Pagination";
 import { Modal } from "bootstrap";
 
-function AdminProducts(){
+function AdminOrders(){
   const [products,setProducts] = useState([])
   const [pagination,setPagination] = useState({})
 
@@ -84,7 +84,7 @@ function AdminProducts(){
   <div className="p-3">
     <ProductModal closeProductModal={closeProductModal} getProducts={getProducts} type={type} productList={productList}/>
     <DeleteModal close={closeDeteleProductModal} text={productList.title} deleteClick={deleteProduct} id={productList.id}/>
-    <h3>產品列表</h3>
+    <h3>訂單列表</h3>
     <hr />
     <div className="text-end">
       <button
@@ -139,4 +139,4 @@ function AdminProducts(){
   </div>)
 }
 
-export default AdminProducts;
+export default AdminOrders;

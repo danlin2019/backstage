@@ -1,7 +1,7 @@
 import { Outlet , useNavigate , Link} from "react-router-dom";
 import axios from "axios";
 import { useEffect, useReducer } from "react";
-import Message from "../../components/Message";
+import Message from "../../components/admin/Message";
 import {MessageContext,messageReducer,initState} from '../../store/messageStore'
 function Dashboard() {
   const navigate = useNavigate()
